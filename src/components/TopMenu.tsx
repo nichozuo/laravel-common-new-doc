@@ -6,21 +6,20 @@ import {
 } from "@ant-design/icons";
 import { Menu } from "antd";
 import { useSearchParams } from "react-router-dom";
-import { stateActions, useMyState } from "../states";
+import { useMyState } from "../states";
 
 export default function TopMenu() {
   const [_, setSearchParams] = useSearchParams();
-
   const { snap } = useMyState();
 
   return (
     <Menu
       theme="dark"
       mode="horizontal"
-      selectedKeys={[snap.session.type]}
+      selectedKeys={[snap.session.type ?? "api"]}
       onSelect={(e) => {
-        console.log("TopMenu::onSelect", e);
-        stateActions.setType(e.key);
+        // console.log("TopMenu::onSelect", e);
+        // stateActions.setType(e.key);
         setSearchParams({ type: e.key });
       }}
       items={[

@@ -4,15 +4,23 @@ export * from "./actions";
 
 type SessionType = {
   openapi: object;
-  treeData: [];
-  type: string;
+  type: string | undefined;
   key: string | undefined;
+
+  apiData: any[];
+  enumData: any[];
+  docData: any[];
+  dbData: any[];
 };
 const session: SessionType = proxy({
   openapi: {},
-  treeData: [],
-  type: "api",
+  type: undefined,
   key: undefined,
+
+  apiData: [],
+  enumData: [],
+  docData: [],
+  dbData: [],
 });
 
 export type StateType = {
