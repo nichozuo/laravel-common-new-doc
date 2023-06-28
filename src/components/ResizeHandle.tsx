@@ -1,6 +1,6 @@
 import { PanelResizeHandle } from "react-resizable-panels";
 
-import styles from "../App.module.css";
+import styles from "../Home.module.css";
 
 export default function ResizeHandle({
   className = "",

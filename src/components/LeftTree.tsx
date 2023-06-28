@@ -1,28 +1,36 @@
+import { Select } from "antd";
 import DirectoryTree from "antd/es/tree/DirectoryTree";
+import { useMyState } from "../states";
 
-export default function LeftTree() {
+export default function LeftTree({ type }: any) {
+  const { snap } = useMyState();
+
   return (
-    <DirectoryTree
-      defaultExpandAll
-      autoExpandParent
-      treeData={[
-        {
-          title: "parent 0",
-          key: "0-0",
-          children: [
-            { title: "leaf 0-0", key: "0-0-0", isLeaf: true },
-            { title: "leaf 0-1", key: "0-0-1", isLeaf: true },
-          ],
-        },
-        {
-          title: "parent 1",
-          key: "0-1",
-          children: [
-            { title: "leaf 1-0", key: "0-1-0", isLeaf: true },
-            { title: "leaf 1-1", key: "0-1-1", isLeaf: true },
-          ],
-        },
-      ]}
-    />
+    <>
+      <Select
+        style={{ width: "100%" }}
+        size="large"
+        showSearch
+        placeholder="Select a person"
+        optionFilterProp="children"
+        filterOption={(input, option: any) =>
+          (option?.key ?? "").toLowerCase().includes(input.toLowerCase())
+        }
+        fieldNames={{
+          label: "key",
+          value: "key",
+        }}
+        // options={snap.session.openapi.paths}
+      />
+      <DirectoryTree
+        autoExpandParent
+        // treeData={treeData}
+        fieldNames={{
+          title: "title",
+          key: "key",
+          children: "children",
+        }}
+      />
+    </>
   );
 }
