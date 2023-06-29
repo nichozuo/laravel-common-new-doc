@@ -3,24 +3,16 @@ import { proxy, useSnapshot } from "valtio";
 export * from "./actions";
 
 type SessionType = {
-  openapi: object;
-  type: string | undefined;
-  key: string | undefined;
-
-  apiData: any[];
-  enumData: any[];
-  docData: any[];
-  dbData: any[];
+  ready: boolean;
+  openapi: object | undefined;
+  type: string;
+  key: string;
 };
 const session: SessionType = proxy({
-  openapi: {},
-  type: undefined,
-  key: undefined,
-
-  apiData: [],
-  enumData: [],
-  docData: [],
-  dbData: [],
+  ready: false,
+  openapi: undefined,
+  type: "",
+  key: "",
 });
 
 export type StateType = {

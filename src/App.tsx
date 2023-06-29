@@ -1,22 +1,35 @@
-import { message } from "antd";
 import { useEffect } from "react";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useSearchParams } from "react-router-dom";
 import Home from "./Home";
-import { stateActions } from "./states";
+import { stateActions, useMyState } from "./states";
 
 function App() {
+  const [searchParams] = useSearchParams();
+  const { snap } = useMyState();
+
   useEffect(() => {
-    // 初始化接口数据
-    fetch("http://0.0.0.0:8000/api/docs/openapi")
-      .then((response) => response.json())
-      .then((data) => {
-        stateActions.setOpenApi(data);
-      })
-      .catch((error) => {
-        message.error(error.message);
-      });
+    async function getOpenapi() {
+      console.log("App::useEffect::setOpenApi");
+      const response = await fetch("/api/docs/openapi");
+      const jsonData = await response.json();
+      stateActions.setOpenApi(jsonData);
+    }
+    getOpenapi();
   }, []);
 
+  useEffect(() => {
+    const type = searchParams.get("type") || "api";
+    const key = searchParams.get("key") || "";
+    console.log("App::useEffect::searchParams", type, key);
+    stateActions.setType(type);
+    stateActions.setKey(key);
+  }, [searchParams]);
+
+  useEffect(() => {
+    if (snap.session.openapi) stateActions.setReady(true);
+  }, [snap.session.openapi]);
+
+  if (!snap.session.ready) return <>Loading...</>;
   return (
     <Routes>
       <Route path="/" element={<Home />} />

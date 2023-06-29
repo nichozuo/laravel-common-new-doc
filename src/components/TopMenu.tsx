@@ -9,17 +9,15 @@ import { useSearchParams } from "react-router-dom";
 import { useMyState } from "../states";
 
 export default function TopMenu() {
-  const [_, setSearchParams] = useSearchParams();
+  const [, setSearchParams] = useSearchParams();
   const { snap } = useMyState();
 
   return (
     <Menu
       theme="dark"
       mode="horizontal"
-      selectedKeys={[snap.session.type ?? "api"]}
+      selectedKeys={[snap.session.type as string]}
       onSelect={(e) => {
-        // console.log("TopMenu::onSelect", e);
-        // stateActions.setType(e.key);
         setSearchParams({ type: e.key });
       }}
       items={[
